@@ -45,7 +45,7 @@ function Category() {
                                 <h1>Categories</h1><hr style={{ color: "#1c45ef", height: "3px" }} />
                                 {/* {isLoading && <Spinner />} */}
                                 <button
-                                    onClick={() => navigate("/addcategory/new")}
+                                    onClick={() => navigate("/home/addcategory/new")}
                                     className="btn btn-primary mb-4"
                                 >Add Category
                                 </button>
@@ -53,7 +53,7 @@ function Category() {
                         </div>
                         <div className="col-md-12 posts" >
                             <table className="table">
-                                <thead style={{ backgroundColor: "grey" }}>
+                                <thead style={{ backgroundColor: "whitesmoke" }}>
                                     <tr>
                                         <th className="col-1">Sno.</th>
                                         <th className="col-2">CategoryName</th>
@@ -65,7 +65,7 @@ function Category() {
                                     {!error && categories.map((category, index) => <tr>
                                         <td>{index + 1}</td>
                                         <td style={{ fontStyle: "normal", fontSmooth: "bold" }}>{category.categoryName.toUpperCase()}</td>
-                                        <td><button onClick={() => navigate(`/addcategory/${category._id}`)} className="btn btn-outline-primary"><i class="fa-solid fa-pen-to-square"></i>edit</button></td>
+                                        <td><button onClick={() => navigate(`/home/addcategory/${category._id}`)} className="btn btn-outline-primary"><i class="fa-solid fa-pen-to-square"></i>edit</button></td>
                                         <td><button onClick={() => deleteCategory(category)} className="btn btn-outline-danger"><i class="fa-solid fa-trash"></i> delete</button></td>
                                     </tr>)}
                                 </tbody>

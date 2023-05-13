@@ -2,13 +2,16 @@ import { useDispatch, useSelector } from "react-redux";
 import "./Customer.css"
 import { useEffect } from "react";
 import { fetchCustomer } from "../../redux-config/customerSlice";
-import Navbar from "../navbar/Navbar";
-import Sidebar from "../sidebar/sidebar";
-import Footer from "../footer/Footer";
+import { useNavigate } from "react-router-dom";
 
 
 function Customer() {
+    const navigate = useNavigate();
     const { customers } = useSelector(state => state.customers);
+
+    const customerProductList = (customerId) => {
+        navigate("/home/customerproductlist", { state: { customerId: customerId } })
+    }
 
     let dispatch = useDispatch();
     useEffect(() => {
@@ -35,7 +38,7 @@ function Customer() {
                                 </li>
                                 {customers.map((customer, index) => <li class="table-row de">
                                     <div class="col col-1" >{index + 1}</div>
-                                    <div class="col col-3" >{customer.customerName}</div>
+                                    <div class="col col-3" ><button onClick={() => customerProductList(customer._id)} className=" border-0" style={{ backgroundColor: "white" }} >{customer.customerName}</button></div>
                                     <div class="col col-3">{customer.customerEmail}</div>
                                     <div class="col col-4">{customer.customerContact}</div>
                                 </li>)}

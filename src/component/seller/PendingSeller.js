@@ -1,11 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchSeller } from "../../redux-config/sellerSlice";
-import api from "../../webApi/api";
 import axios from "axios";
-import Footer from "../footer/Footer";
-import Navbar from "../navbar/Navbar";
-import Sidebar from "../sidebar/sidebar";
+import api from "../../webApi/api";
 
 function PendingSeller() {
     const { sellers } = useSelector(state => state.sellers);
@@ -14,11 +11,9 @@ function PendingSeller() {
     const activeSeller = async (sellerId, index) => {
         try {
             if (window.confirm('Are you sure ?')) {
-                let response = await axios.put(`http://localhost:3000/admin/${sellerId}`);
-                window.alert(response.data.status);
+                let response = await axios.put(api.SELLER_STATUS+`${sellerId}`);
                 if (response.data.status) {
                     setSeller([...sellers, response.data.seller]);
-
                 }
             }
         }
@@ -27,14 +22,11 @@ function PendingSeller() {
             window.alert("Oops! something wrong...");
         }
     }
-
     let dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchSeller());
-
     })
     return <>
-
         <div className="main-content">
             <section className="section">
                 <div className="main-panel">
@@ -45,7 +37,7 @@ function PendingSeller() {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-md-10">
+                            <div className="col-md-12">
                                 <table className="table">
                                     <thead>
                                         <tr>
@@ -62,7 +54,7 @@ function PendingSeller() {
                                             <td>{seller.sellerName}</td>
                                             <td>{seller.sellerEmail}</td>
                                             <td>{seller.sellerContact}</td>
-                                            <td><button onClick={() => activeSeller(seller._id, index)} className="btn btn-success"><i class="fa fa-arrow-right" aria-hidden="true"></i></button></td>
+                                            <td><button onClick={() => activeSeller(seller._id, index)} className="btn btn-outline-primary">Active</button></td>
                                         </tr>)}
                                     </tbody>
                                 </table>
@@ -72,10 +64,6 @@ function PendingSeller() {
                 </div>
             </section>
         </div>
-
-
-
-
     </>
 }
 
