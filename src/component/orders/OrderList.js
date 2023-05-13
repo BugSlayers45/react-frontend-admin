@@ -1,50 +1,29 @@
-import axios from "axios";
-import api from "../../webApi/api";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOrder } from "../../redux-config/orderSlice";
 import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
 
-function Order() {
+function OrderList() {
     const { orders } = useSelector(state => state.orders);
-    const [order, setOrder] = useState([]);
     const dispatch = useDispatch();
 
-    const activeOrder = async (orderId, index) => {
-        try {
-            if (window.confirm('Are you sure ?')) {
-                let response = await axios.put(api.ORDER_STATUS + `${orderId}`);
-                if (response.data.status) {
-                    setOrder([...orders, response.data.Order]);
-                    toast.success("Order updated successfully");
-                }
-            }
-        }
-        catch (err) {
-            console.log(err);
-            window.alert("Oops! something wrong...");
-        }
-    }
     useEffect(() => {
         dispatch(fetchOrder());
-    });
+    }, []);
 
     return <>
-    <ToastContainer/>
         <div className="main-content">
             <section className="section">
                 <div className="main-panel">
                     <div className="content-wrapper">
                         <div className="row page-title-header">
                             <div className="col-12">
-                                <h2>Orders</h2><hr style={{ color: "#1c45ef", height: "3px" }} />
+                                <h2>Order List</h2><hr style={{ color: "#1c45ef", height: "3px" }} />
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-md-12">
-                            <Link to="/home/orderlist" className="btn btn-outline-primary mb-3">Shipped Orders</Link>
+                            <Link to="/home/order" className="btn btn-outline-primary mb-3">Pending Orders</Link>
                                 <table className="table">
                                     <thead>
                                         <tr>
@@ -57,13 +36,13 @@ function Order() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {orders.filter((list) => list.status == "pending").map((order, index) => <tr>
+                                        {orders.filter((list) => list.status == "shipped").map((order, index) => <tr>
                                             <td>{index + 1}</td>
                                             <td>{order._id}</td>
                                             <td>{order.date.toString().substring(0, 10).replaceAll(' ', '-')}</td>
                                             <td>{order.contactPerson}</td>
                                             <td>{order.deliveryAddress}</td>
-                                            <td><button onClick={() => activeOrder(order._id, index)} className="btn btn-outline-primary">{order.status}</button></td>
+                                            <td><button className="btn btn-outline-primary" disabled>{order.status}</button></td>
                                         </tr>)}
                                     </tbody>
                                 </table>
@@ -75,4 +54,4 @@ function Order() {
         </div>
     </>
 }
-export default Order;
+export default OrderList;

@@ -3,13 +3,15 @@ import productSlice from "./productSlice";
 import sellerSlice from "./sellerSlice";
 import orderSlice from "./orderSlice";
 import customerSlice from "./customerSlice";
+import adminSlice from "./adminSlice";
 
 const store = configureStore({
     reducer:{
         productList: productSlice,
         sellers: sellerSlice,
         orders: orderSlice,
-        customers: customerSlice
+        customers: customerSlice,
+        admin: adminSlice,
     }
 })
 

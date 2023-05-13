@@ -1,6 +1,18 @@
+import zIndex from "@mui/material/styles/zIndex";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { signOut } from "../../redux-config/adminSlice";
+
 function Navbar() {
+    let { admin } = useSelector(state => state.admin)
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const signout = () => {
+        dispatch(signOut());
+        navigate("/")
+    }     
     return <>
-        <nav className="navbar navbar-expand-lg main-navbar bg-primary" style={{position:"fixed",top:"0%"}}>
+        <nav className="navbar navbar-expand-lg main-navbar bg-primary" style={{ position: "fixed", top: "0%", zIndex: "10" }}>
             <form className="form-inline mr-auto">
                 <ul className="navbar-nav mr-3">
                     <li>
@@ -14,8 +26,8 @@ function Navbar() {
                         </a>
                     </li>
                 </ul>
-             
-                <div className="search-element">
+
+                {/* <div className="search-element">
                     <input
                         className="form-control"
                         type="search"
@@ -99,7 +111,7 @@ function Navbar() {
                             </a>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </form>
             <ul className="navbar-nav navbar-right">
                 {/* <li className="dropdown dropdown-list-toggle">
@@ -279,28 +291,20 @@ function Navbar() {
                     </div>
                 </li> */}
                 <li className="dropdown">
-                    <a
-                        href="#"
-                        data-toggle="dropdown"
-                        className="nav-link dropdown-toggle nav-link-lg nav-link-user"
-                    >
-                        <img
-                            alt="image"
-                            src="assets/img/avatar/avatar-1.png"
-                            className="rounded-circle mr-1"
-                        />
-                        <div className="d-sm-none d-lg-inline-block">Hi, Vikram Singh</div>
+                    <a href="#" data-toggle="dropdown" className="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                        <img alt="image" src="/assets/img/avatar/vikram.jpeg" className="rounded-circle mr-1"/>
+                        <div className="d-sm-none d-lg-inline-block">Hi,Vikram</div>
                     </a>
                     <div className="dropdown-menu dropdown-menu-right">
-                        <div className="dropdown-title">Logged in 5 min ago</div>
+                        {/* <div className="dropdown-title">Logged in 5 min ago</div>
                         <a href="features-profile.html" className="dropdown-item has-icon">
                             <i className="far fa-user" /> Profile
-                        </a>
+                        </a> */}
 
                         <div className="dropdown-divider" />
-                        <a href="#" className="dropdown-item has-icon text-danger">
+                        <button onClick={signout} className="dropdown-item has-icon text-danger">
                             <i className="fas fa-sign-out-alt" /> Logout
-                        </a>
+                        </button>
                     </div>
                 </li>
             </ul>

@@ -1,6 +1,12 @@
 body{
     padding-bottom: 100vh;
 }
+
+#first-container{
+    padding-top: 100vh !important;
+    background-color: black;
+    width: 200px;
+}
 #box {
     /* background-color: rgb(41,77,240); */
     background-color: white;

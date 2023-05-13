@@ -1,21 +1,38 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSeller } from "../../redux-config/sellerSlice";
-import Footer from "../footer/Footer";
-import Sidebar from "../sidebar/sidebar";
-import Navbar from "../navbar/Navbar";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import api from "../../webApi/api";
+import axios from "axios";
 
 
 function Seller() {
     const navigate = useNavigate();
     const { sellers } = useSelector(state => state.sellers);
+    const [seller, setSeller] = useState([]);
 
- 
+    const SellerList = (sellerId) => {
+        navigate("/home/sellerlist", { state: { sellerId: sellerId } });
+    };
+    const activeSeller = async (sellerId, index) => {
+        try {
+            if (window.confirm('Are you sure ?')) {
+                let response = await axios.put(api.SELLER_STATUS1+`${sellerId}`);
+                if (response.data.status) {
+                    setSeller([...sellers, response.data.seller]);
+                }
+            }
+        }
+        catch (err) {
+            console.log(err);
+            window.alert("Oops! something wrong...");
+        }
+    }
+
     let dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchSeller());
-    }, [dispatch]);
+    });
 
     return <>
 
@@ -28,23 +45,31 @@ function Seller() {
                                 <h2>Sellers</h2><hr style={{ color: "#1c45ef", height: "3px" }} />
                             </div>
                         </div>
-                        <div class="container">
-                            <ul class="responsive-table uline">
-                                <li class="table-header de">
-                                    <div className="col col-1">Sno</div>
-                                    <div className="col col-2">Name</div>
-                                    <div className="col col-2">Email</div>
-                                    <div className="col col-2">Contact</div>
-                                    <div className="col col-3">Address</div>
-                                </li>
-                                {sellers.map((seller, index) => <li class="table-row de">
-                                    <div class="col col-1" >{index + 1}</div>
-                                    <div class="col col-2" >{seller.sellerName}</div>
-                                    <div class="col col-2">{seller.sellerEmail}</div>
-                                    <div class="col col-2">{seller.sellerContact}</div>
-                                    <div class="col col-3">{seller.sellerAddress}</div>
-                                </li>)}
-                            </ul>
+                        <div className="row">
+                            <div className="col-md-12">
+                                <table className="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Sno.</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Contact</th>
+                                            <th>Address</th>
+                                            <th>Active/Deactive</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {sellers.filter((list) => list.status == "Active").map((seller, index) => <tr>
+                                            <td>{index + 1}</td>
+                                            <td><button onClick={() => SellerList(seller._id)} className=" border-0" style={{backgroundColor:"rgb(250,253,251)"}} > {seller.sellerName}</button></td>
+                                            <td>{seller.sellerEmail}</td>
+                                            <td>{seller.sellerContact}</td>
+                                            <td>{seller.sellerAddress}</td>
+                                            <td><button onClick={() => activeSeller(seller._id, index)} className="btn btn-outline-primary">Deactive</button></td>
+                                        </tr>)}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
