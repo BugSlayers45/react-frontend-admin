@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const fetchAdmin = createAsyncThunk("/admin/singin",async(email)=>{
    try{
-    let response = await axios.post(api.ADMIN_SIGNIN,{email});
+    let response = await axios.post(api.ADMIN_SIGNIN,{email:email});
     // console.log(response)
     if(response.data.status)
       return response.data.admin
@@ -14,8 +14,7 @@ export const fetchAdmin = createAsyncThunk("/admin/singin",async(email)=>{
 })
 
 const slice = createSlice({
-    name: "seller",
-    name:'user',
+    name: "admin",
     initialState:{
         admin:null,
         isLoading: false,
@@ -40,7 +39,7 @@ const slice = createSlice({
         builder.addCase(fetchAdmin.rejected,(state,action)=>{
             state.isLoading = false;
             state.error = "Oops! something went wrong"
-            
+
         })
     }
 })

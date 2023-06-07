@@ -25,7 +25,7 @@ function PendingSeller() {
     let dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchSeller());
-    })
+    },[sellers])
     return <>
         <div className="main-content">
             <section className="section">

@@ -39,6 +39,7 @@ function SignIn() {
         let data = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", { headers: { "Authorization": `Bearer ${tokenResponse.access_token}` } })
         dispatch(fetchAdmin(data.data.email));
         toast.success("Sign In Success");
+        // let response = await axios.post(api.SIGNIN, { email: data.data.email });
         navigate("/home");
       } catch (err) {
         if (err.request.status == 400) {

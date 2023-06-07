@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import ReactImageMagnify from "react-image-magnify"
 
 function ProductDescription() {
     const location = useLocation();
@@ -11,7 +12,7 @@ function ProductDescription() {
         // mainImage.src = currentImageObject.src;
         // currentImageObject.src = temp;
     }
-    
+
     return <>
         <div className="main-content">
             <section className="section">
@@ -29,7 +30,22 @@ function ProductDescription() {
                                         <div id="lens" />
                                     </div>
                                     <div className="col-md-5">
-                                        <img id="mainImage" src={productData.thumbnail} style={{ height: 300, width: 300 }} />
+                                        <ReactImageMagnify
+                                            {...{
+                                                smallImage: {
+                                                    alt: "Wristwatch by Ted Baker London",
+                                                    isFluidWidth: true,
+                                                    src: productData.thumbnail,
+                                                },
+                                                largeImage: {
+                                                    src: productData.thumbnail,
+                                                    width: 1500,
+                                                    height: 2000,
+                                                },
+                                            }}
+                                            style={{ zIndex: "2" }}
+                                        />
+                                        {/* <img id="mainImage" src={productData.thumbnail} style={{ height: 300, width: 300 }} /> */}
                                     </div>
                                     <div className="col-md-5">
                                         <div className="col-lg-12 col-md-12 col-md-12">
