@@ -1,20 +1,24 @@
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import api from "../../webApi/api";
 import { useEffect, useState } from "react";
 
+
 function CustomerProductList() {
     const [customerOrders, setCustomerOrdes] = useState([]);
+    const navigate = useNavigate();
     const location = useLocation();
     const id = location.state.customerId
-    // console.log(id);
 
     const fetchCustomerByOrders = async () => {
-        console.log(id);
-        const response = await axios.get(`http://localhost:3000/order/orderdetailbycustomer/${id}`);
+        const response = await axios.post(api.CUSTOMERS_ORDER, { id });
         if (response.data.status)
             setCustomerOrdes(response.data.order);
-        console.log(response.data.order);
+        
+    }
+
+    const customerOrderItem = (customerOrders) => {
+        navigate("/home/customerorderitem", { state: { customerOrders: customerOrders } })
     }
 
     useEffect(() => {
@@ -31,30 +35,31 @@ function CustomerProductList() {
                                 <h2>Customer Orders</h2><hr style={{ color: "#1c45ef", height: "3px" }} />
                             </div>
                         </div>
-                        <div class="container">
-                            <ul class="responsive-table uline">
-                                <li class="table-header de">
-                                    <div className="col col-1">OrderId</div>
-                                    <div className="col col-2">SellerId</div>
-                                    <div className="col col-1">Date</div>
-                                    <div className="col col-2">Location</div>
-                                    <div className="col col-2">Total</div>
-                                    <div className="col col-1">Status</div>
-                                    <div className="col col-1">Paid</div>
-                                </li>
-                                <li class="table-row de">
-                                    <div class="col col-1" ></div>
-                                    <div class="col col-2" ></div>
-                                    <div class="col col-1"></div>
-                                    <div class="col col-2"></div>
-                                    <div class="col col-2"></div>
-                                    <div class="col col-2" ></div>
-                                    <div class="col col-1" ></div>
-                                    <div class="col col-1"></div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>OrderId</th>
+                                    <th>Date</th>
+                                    <th>CustomerName</th>
+                                    <th>Address</th>
+                                    <th>Total Amount</th>
+                                    <th>Status</th>
+                                    <th>View Product</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {customerOrders.map((order, index) => <tr>
+                                    <td>{order._id}</td>
+                                    <td>{order.date.substring(0, 10)}</td>
+                                    <td>{order.contactPerson}</td>
+                                    <td>{order.deliveryAddress}</td>
+                                    <td>{order.billAmount}</td>
+                                    <td>{order.status}</td>
+                                    <td><button onClick={() => customerOrderItem(order._id)} style={{border:"none", backgroundColor:"rgb(240,243,241)"}} ><i class="fa-solid fa-eye"></i></button></td>
+                                </tr>)}
+                            </tbody>
+                        </table>
+                    </div >
                 </div>
             </section>
         </div>

@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Pagination, Spinner, Table } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import api from "../../webApi/api";
 
 function SellerProducts() {
     const [data, setData] = useState([]);
@@ -9,10 +10,15 @@ function SellerProducts() {
     const [page, setPage] = useState(1);
     const [pageCount, setPageCount] = useState(0);
     const location = useLocation();
+    const navigate = useNavigate();
     const sellerId = location.state.sellerId;
 
+    const productsDescription = (productData) => {
+        navigate(("/home/productdescription"), { state: { productData: productData } });
+    }
+
     const fetchSellerProducts = async () => {
-        let response = await axios.get(`http://localhost:3000/product/productlist/${sellerId}`);
+        let response = await axios.get(api.SELLER_PRODUCT + `${sellerId}`);
         if (response.data.status)
             setData(response.data.productsList);
         console.log(response.data.productsList);
@@ -22,7 +28,6 @@ function SellerProducts() {
         if (page === pageCount) return page;
         setPage(page + 1)
     }
-
 
     const handlePrevios = () => {
         if (page === 1) return page;
@@ -46,7 +51,7 @@ function SellerProducts() {
     }, [data])
 
     return <>
-         <div className="main-content">
+        <div className="main-content">
             <section className="section">
                 <div className="main-panel">
                     <div className="content-wrapper">
@@ -71,7 +76,9 @@ function SellerProducts() {
                                                         <>
                                                             <tr>
                                                                 <td>{index + 1}</td>
-                                                                <td><img src={product.thumbnail} style={{ width: 80, height: 80, borderRadius:"50%" }} alt="" /></td>
+                                                                <td><button style={{ backgroundColor: "white", borderRadius: "50%", color: "white", border: "none" }} className="btn btn-sm btn-light" onClick={() => productsDescription(product)}><img src={product.thumbnail} style={{ width: 100, height: 100, borderRadius: "50%" }} alt="" /></button></td>
+
+                                                                {/* <td><img src={product.thumbnail} style={{ width: 80, height: 80, borderRadius:"50%" }} alt="" /></td> */}
                                                                 <td>{product.title.substring(0, 10)}</td>
                                                                 <td>{product.stock}</td>
                                                                 <td>{product.price}</td>
@@ -93,7 +100,7 @@ function SellerProducts() {
                                         Array(pageCount).fill(null).map((ele, index) => {
                                             return (
                                                 <>
-                                                    <Pagination.Item style={{maxWidth:"100%"}} active={page === index + 1 ? true : false} onClick={() => setPage(index + 1)}>{index + 1}</Pagination.Item>
+                                                    <Pagination.Item style={{ maxWidth: "100%" }} active={page === index + 1 ? true : false} onClick={() => setPage(index + 1)}>{index + 1}</Pagination.Item>
                                                 </>
                                             )
                                         })

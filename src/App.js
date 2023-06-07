@@ -16,6 +16,9 @@ import SignIn from './component/admin/signin/signin';
 import Order from './component/orders/order';
 import OrderList from './component/orders/OrderList';
 import UpdateProduct from './component/product/UpdataProduct';
+import SellerDetail from './component/seller/SellerDetail';
+import SellerViewCustomer from './component/seller/SellerViewCustomer';
+import CustomerOrderItem from './component/customer/CustomerOrderItem';
 
 
 
@@ -37,7 +40,10 @@ function App() {
         <Route path="/home/addcategory/:id" element={<AddCategory />} />
         <Route path='/home/pendingseller' element={<PendingSeller />} />
         <Route path='/home/sellerlist' element={<SellerProducts/>} />
+        <Route path='/home/sellerdetail' element={<SellerDetail/>} />
+        <Route path="/home/sellerviewcustomer" element={<SellerViewCustomer/>} />
         <Route path='/home/customerproductlist' element={<CustomerProductList/>} />
+        <Route path='/home/customerorderitem' element={<CustomerOrderItem/>} />
         <Route path='/home/productdescription' element={<ProductDescription/>}/>
       </Route>
 

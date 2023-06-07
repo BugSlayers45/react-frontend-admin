@@ -29,10 +29,12 @@ function Order() {
     }
     useEffect(() => {
         dispatch(fetchOrder());
-    });
 
+        // const sortedData = orders.sort((a, b) => new Date(a.date) - new Date(b.date));
+        // setOrder(sortedData);
+    },[orders]);
     return <>
-    <ToastContainer/>
+        <ToastContainer />
         <div className="main-content">
             <section className="section">
                 <div className="main-panel">
@@ -44,7 +46,7 @@ function Order() {
                         </div>
                         <div className="row">
                             <div className="col-md-12">
-                            <Link to="/home/orderlist" className="btn btn-outline-primary mb-3">Shipped Orders</Link>
+                                <Link to="/home/orderlist" className="btn btn-outline-primary mb-3">Shipped Orders</Link>
                                 <table className="table">
                                     <thead>
                                         <tr>

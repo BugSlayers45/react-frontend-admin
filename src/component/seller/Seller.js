@@ -14,6 +14,9 @@ function Seller() {
     const SellerList = (sellerId) => {
         navigate("/home/sellerlist", { state: { sellerId: sellerId } });
     };
+    const SellerByOrder = (sellerId)=>{
+        navigate("/home/sellerdetail",{state:{sellerId: sellerId}})
+    }
     const activeSeller = async (sellerId, index) => {
         try {
             if (window.confirm('Are you sure ?')) {
@@ -54,7 +57,7 @@ function Seller() {
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Contact</th>
-                                            <th>Address</th>
+                                            <th>View Order</th>
                                             <th>Active/Deactive</th>
                                         </tr>
                                     </thead>
@@ -64,7 +67,7 @@ function Seller() {
                                             <td><button onClick={() => SellerList(seller._id)} className=" border-0" style={{backgroundColor:"rgb(250,253,251)"}} > {seller.sellerName}</button></td>
                                             <td>{seller.sellerEmail}</td>
                                             <td>{seller.sellerContact}</td>
-                                            <td>{seller.sellerAddress}</td>
+                                            <td><button onClick={() => SellerByOrder(seller._id)} className="btn btn-outline-primary">Orders</button></td>
                                             <td><button onClick={() => activeSeller(seller._id, index)} className="btn btn-outline-primary">Deactive</button></td>
                                         </tr>)}
                                     </tbody>

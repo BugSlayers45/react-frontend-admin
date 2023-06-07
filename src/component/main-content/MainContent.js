@@ -1,4 +1,3 @@
-
 import "../home/Home.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -42,7 +41,7 @@ export default function MainContent() {
 
     return <>
         <ToastContainer />
-        <div className="main-content">
+        <div className="main-content" style={{height:"10vh"}}>
             <section className="section">
                 <div className="container">
                     <div className="row rowButtom">
@@ -75,7 +74,7 @@ export default function MainContent() {
                                 <div className="col-3 box m-auto" id="box" style={{ backgroundColor: "#f7931a" }}>
 
                                     <div className="row">
-                                        <div className="col-5"> <p id="text"><i class="fa-solid fa-comment-dollar"></i>Total Earning</p></div>
+                                        <div className="col-5"> <p id="text"><i class="fa-solid fa-money-bill"></i>Total Earning</p></div>
                                         <div className="col-4 offset-2"><p id="no">&#8377;{totalAmount}</p></div>
                                     </div>
                                 </div>

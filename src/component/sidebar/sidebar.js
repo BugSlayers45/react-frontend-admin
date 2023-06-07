@@ -13,7 +13,7 @@ function Sidebar() {
     return <div className="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
             <div className="sidebar-brand">
-                <a href="index.html">Handcraft</a>
+                <a href="#">Handcraft</a>
             </div>
             <div className="sidebar-brand sidebar-brand-sm">
                 <a href="index.html">HC</a>
@@ -56,16 +56,11 @@ function Sidebar() {
                                 Orders
                             </Link>
                         </li>
-                        <li className="active">
-                            <Link to="/home/payment" className="nav-link" >
-                                Payment
-                            </Link>
-                        </li>
                     </ul>
                 </li>
             </ul>
             <li className="active">
-                <button onClick={signout} className="mt-3 ml-4" style={{border:"none",backgroundColor:"white",color:"blue"}} >
+                <button onClick={signout} className="mt-3 ml-2" style={{border:"none",backgroundColor:"white",color:"blue"}} >
                     Logout
                 </button>
             </li>
